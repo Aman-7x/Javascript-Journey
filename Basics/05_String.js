@@ -21,3 +21,5 @@ console.log(gameName.toUpperCase());
 console.log(gameName.replace('A',''))
 console.log(gameName.includes("We"));
 console.log(gameName.split(".")); // Converting to Array on the basis of '.' 
+
+console.log(typeof gameName);
