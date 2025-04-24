@@ -14,7 +14,7 @@
 // let booleanLogIn =  Boolean(isLoggedIn);
 // console.log(booleanLogIn);
 
-<<<<<<< HEAD
+
 // let someNum = undefined;
 // let stringNum = String(someNum);
 // console.log(typeof stringNum);
@@ -45,11 +45,10 @@ console.log("1"+2+"2"); //122
 
 console.log(1+(2+"2")); //122
 
-=======
 let someNum = undefined;
 let stringNum = String(someNum);
 console.log(typeof stringNum);
 console.log(stringNum);
 console.log(typeof (stringNum));
 console.log(stringNum);
->>>>>>> b3dbfd9b8bc4393b08dfe4f032fd49931520dd20
+ 

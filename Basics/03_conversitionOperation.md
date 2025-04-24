@@ -56,7 +56,7 @@ output :
 null-> false
 undefined -> false
 
--------------------------------------------------------------------------------------------_____
+-------------------------------------------------------------------------------------------
 Exp 3: String Conversion
 
 let someNum = undefined;
@@ -70,7 +70,7 @@ ouput :
  undefined -> String undefined
  .5 -> String 0.5
  
-<<<<<<< HEAD
+
  ------------------------------------------------------------------------------------------
  Exp 04: 
  let value = 3;
@@ -96,5 +96,3 @@ js treated all the variable as a string if string comes first i.e console.log("1
 if String is in the last then first perfome all the operation before it then add to string i.e console.log(1+2+"2"); //32 
 
 Best practise to use parenthesis ()
-=======
->>>>>>> b3dbfd9b8bc4393b08dfe4f032fd49931520dd20
