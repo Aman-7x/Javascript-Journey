@@ -2,7 +2,7 @@
 // **************Heap And Stack Memory******************
 
 // example of stack memory 
-// let user="Aman";     
+// let user="Aman";
 // let name=user; 
 // name = "Khan";   // It will not change the refrence varible 
 // console.log(user);
