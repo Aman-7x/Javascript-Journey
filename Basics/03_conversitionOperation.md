@@ -70,3 +70,28 @@ ouput :
  undefined -> String undefined
  .5 -> String 0.5
  
+ ------------------------------------------------------------------------------------------
+ Exp 04: 
+ let value = 3;
+let negValue = -value;
+console.log(negValue);
+
+output : -3
+
+let str1 = "Aman";
+let str2 = "hello ";
+let str3 = str2+str1;
+
+console.log(str3); : hello Aman
+
+
+console.log("1"+2);  //12
+console.log("1"+2+2); //122
+console.log(1+2+"2"); //32
+console.log("1"+2+"2"); //122
+
+js treated all the variable as a string if string comes first i.e console.log("1"+2+2); //122
+
+if String is in the last then first perfome all the operation before it then add to string i.e console.log(1+2+"2"); //32 
+
+Best practise to use parenthesis ()
