@@ -96,3 +96,5 @@ js treated all the variable as a string if string comes first i.e console.log("1
 if String is in the last then first perfome all the operation before it then add to string i.e console.log(1+2+"2"); //32 
 
 Best practise to use parenthesis ()
+
+ending....
