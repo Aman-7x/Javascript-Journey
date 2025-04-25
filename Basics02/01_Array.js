@@ -5,7 +5,7 @@ const myArr2 = new Array(1,2,3,4);
 // console.log(myHero[0]);
 
 //Array Methods
-
+ 
 // myArr.push(6);
 // myArr.push(7);
 // myArr.pop();
