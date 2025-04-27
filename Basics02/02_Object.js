@@ -66,13 +66,43 @@ const obj4= {5:"e", 6:"f"};
 
 // console.log(obj3);
 
-console.log(tinderUser);
+// console.log(tinderUser);
 
 // console.log(Object.keys(tinderUser));//return array of keys
 // console.log(Object.values(tinderUser)); //return array of values
 // console.log(Object.entries(tinderUser)); //return array of subarray with key and values
 
-console.log(tinderUser.hasOwnProperty('isLoggedIn'));
+// console.log(tinderUser.hasOwnProperty('isLoggedIn'));
+
+
+// Distructure of Object 
+
+ const {name : n} = tinderUser;
+//  console.log(name);
+ console.log(n);
+ 
+
+//  Data in API 
+// Object form 
+// {
+//     "name" : "Aman",
+//     "batch":13,
+//     "isActive": true
+// }
+
+// Array form 
+// [
+//     {
+
+//     },
+//     {
+
+//     },
+//     {
+
+//     }
+// ]
+
 
 
 
