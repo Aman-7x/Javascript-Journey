@@ -34,3 +34,6 @@ const user={
 addTwo=(a,b)=>  (a+b);  //Implicit return
 
 console.log(addTwo(3,4));
+console.log(addTwo(32,41));
+console.log(addTwo(33,43));
+console.log(addTwo(31,41));
