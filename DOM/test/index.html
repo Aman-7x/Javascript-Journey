@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>DOM Practice Bhai</title>
+  <style>
+    body {
+      font-family: Arial;
+      text-align: center;
+      margin-top: 50px;
+    }
+    #output {
+      color: green;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1 id="mainHeading">Hello World 👋</h1>
+
+  <p id="output">This is DOM in action!</p>
+
+  <!-- <button onclick="changeText()">Change Text</button>
+  <button onclick="changeColor()">Change Color</button>
+  <button onclick="addElement()">Add New Element</button> -->
+  <div id="box" class="red square boxy"></div>
+
+  <script>
+    function changeText() {
+        let para = document.getElementById("output");
+        para.textContent  = "Text Content is Now changed";
+    }
+    changeText();
+
+    function changeColor() {
+        let col = document.getElementById("mainHeading");
+        col.style.color="brown";
+    }
+    changeColor();
+
+    function addNewPara(){
+        let para = document.createElement("p");
+        para.textContent = "I am a New Paragraph"; //Plain Text
+        para.style.color= "red";
+        para.innerHTML = "Hey <b>Dear</b>" //HTML tag will work
+        document.body.appendChild(para);
+    }
+     addNewPara();
+
+    function setAttribute(){
+        let att = document.getElementsByTagName("h1");
+        att.setAttribute("class","Header");
+    }
+    setAttribute();
+
+    function classlist(){
+      let div = document.getElementById("box");
+      div.classList.add("newClass");
+      console.log(list.classList());
+      
+    }
+    classlist();
+     
+  </script>
+
+</body>
+</html>
