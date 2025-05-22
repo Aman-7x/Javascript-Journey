@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body style="margin-left: 2rem;">
+
+    <div class="form-group">
+        <div style="margin: 2rem 0rem 1rem 0rem;">
+            <input onkeyup="validateEmail()" type="text" name="email" id="email" placeholder="Enter Email Address">
+            <br>
+            <small id="emailError" style=" color: red;"></small>
+        </div>
+        Male<input type="radio" name="gender" value="male" id="male" class="form-control">
+        Female<input type="radio" name="gender" value="female" id="female" class="form-control">
+        <br>
+        <small id="genderError" style="color: red;"></small>
+    </div>
+
+    <div class="form-control" style="margin-bottom: 3rem;">
+        <p>Want to Travel in...</p> <br>
+        Jaipur<input type="checkbox" onchange="validateTravel()" id="jaipur" class="form-control"> <br>
+        Aagra<input type="checkbox" onchange="validateTravel()" id="aagra" class="form-control">
+        <br>
+        <small id="travelError" style="color: red;"></small>
+    </div>
+
+    <div class="form-group mt-3">
+        <button onclick="return validateForm()" class="btn btn-success" type="submit">Submit</button>
+    </div>
+
+    <script>
+        function validateEmail() {
+            let status = true;
+            let emailInput = document.getElementById("email");
+            let emailError = document.getElementById("emailError")
+            let email = emailInput.value.trim();
+            let count = 0;
+            for (const key of email) {
+                if (key.includes("@")) {
+                    count++;
+                }
+            }
+
+            if (email.length == 0) {
+                status = false;
+                 emailError.innerText = "Email is required !";
+
+
+            } else {
+                if (email.charAt(0) == "@") {
+                    status = false;
+                    emailError.innerText = "Use Valid Formate , Email can't start with @";
+
+                } else {
+                    if (!email.includes("@")) {
+                        status = false;
+                        emailError.innerText = "Invalid email use @ !";
+                    } else {
+                        if (count > 1) {
+                            status = false;
+                            emailError.innerText = "Invalid email , '@' It should be single !";
+                        }else if(!email.includes("gmail")){
+                            status = false;
+                            emailError.innerText = "Invalid email , Must be contain 'gmail' !";
+                        }else if (!email.includes(".com")) {
+                            status = false;
+                            emailError.innerText = "Invalid email , '.com' is required";
+                        } else if (!email.endsWith(".com")) {
+                            status = false;
+                            emailError.innerText = "Invalid email , '.com' it should be in last";
+                        }else {
+                            
+                            emailError.innerText = "";
+                        }
+                    }
+                }
+            }
+        }
+
+
+            function validateTravel() {
+                let city1 = document.getElementById("jaipur");
+                let city2 = document.getElementById("aagra");
+                let travelError = document.getElementById("travelError");
+                let status = true;
+
+                if (!city1.checked && !city2.checked) {
+                    status = false;
+                    travelError.innerText = "Check Atleast One City";
+                } else {
+
+                    travelError.innerText = "";
+                }
+
+                return status;
+            }
+            function validateGender() {
+                let male = document.getElementById("male");
+                let female = document.getElementById("female");
+                let genderError = document.getElementById("genderError");
+                let status = true;
+
+                if (!male.checked && !female.checked) {
+                    status = false;
+                    genderError.innerText = "Select Gender !";
+                } else {
+                    genderError.innerText = "";
+                }
+
+                return status;
+
+            }
+
+            function validateForm() {
+                let genderStatus = validateGender();
+                let travelStatus = validateTravel();
+                let emailStatus = validateEmail();
+                if (travelStatus && genderStatus && emailStatus)
+                    return true;
+                return false;
+            }
+    </script>
+</body>
+
+</html>
