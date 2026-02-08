@@ -19,7 +19,7 @@ export const fetchContact = async(req,res)=>{
         
         const contacts = await Contacts.find(query);
          if(contacts)
-            return res.status(200).json({"Contact":contacts});
+            return res.status(200).json({"User":req.user,"Contact":contacts});
         else
             return res.status(500).json({"Error":"Internal Server Error"});
 
