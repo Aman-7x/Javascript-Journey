@@ -3,76 +3,72 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 
-
 dotenv.config();
 
-export const signUp = async(req,res)=>{
-    try{
-        const {name,email,password} = req.body;
+//SignUp route
+export const signUp = async (req, res) => {
+  try {
+    const { name, email, password } = req.body;
 
-        if(!name || !email || !password)
-            return res.status(400).json({"Error":"Invalid Input"});
+    if (!name || !email || !password)
+      return res.status(400).json({ Error: "Invalid Input" });
 
-        const isExists = await User.findOne({email:email});
-        
-        if(isExists)
-            return res.status(401).json({"Error":"User Already Exists!!"});
+    const isExists = await User.findOne({ email: email });
 
-        const hashedPassword = await bcrypt.hash(password,12);
+    if (isExists)
+      return res.status(401).json({ Error: "User Already Exists!!" });
 
-        const user = await User.create({
-            name,
-            email,
-            password : hashedPassword
-        });
+    const hashedPassword = await bcrypt.hash(password, 12);
 
-        if(user)
-            return res.status(201).json({"Message":"User is Created ",user:user});
-        else
-             return res.status(500).json({"Error":"Internal Server Error"});
+    const user = await User.create({
+      name,
+      email,
+      password: hashedPassword,
+    });
 
-    }catch(err){
-        console.log("Error : ",err);
-                     return res.status(500).json({"Error":"Internal Server Error"});
+    if (user)
+      return res.status(201).json({ Message: "User is Created ", user: user });
+    else return res.status(500).json({ Error: "Internal Server Error" });
+  } catch (err) {
+    console.log("Error : ", err);
+    return res.status(500).json({ Error: "Internal Server Error" });
+  }
+};
 
-    }
-}
+//SignIn route
+export const signIn = async (req, res) => {
+  try {
+    const { email, password } = req.body;
 
+    if (!email || !password)
+      return res.status(400).json({ Error: "Invalid Input" });
 
-export const signIn = async (req,res)=>{
-    try{
-        const {email,password} = req.body;
+    const user = await User.findOne({ email: email });
 
-        if(!email || !password)
-             return res.status(400).json({"Error":"Invalid Input"});
+    // if(!user)
+    //         return res.status(404).json({"Error":"User Not Found"});
 
-        const user = await User.findOne({email:email});
+    if (user && (await bcrypt.compare(password, user.password))) {
+      const token = jwt.sign(
+        {
+          user: {
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+          },
+        },
+        process.env.SECRET_KEY,
+        {
+          expiresIn: "1h",
+        }
+      );
 
-        // if(!user)
-        //         return res.status(404).json({"Error":"User Not Found"});
-
-        if(user && await bcrypt.compare(password,user.password)){
-            const token =  jwt.sign({
-                user:{
-                    _id : user._id,
-                    name : user.name,
-                    email : user.email
-                }
-            },process.env.SECRET_KEY, 
-            {
-                expiresIn:"1h"
-            });
-            
-            return res.status(200).json({"Message":"SignIn Successfully",
-                user : user,
-                token:token
-            });
-        }else
-            return res.status(401).json({"Error":"Invalid User or Password"});
-
-
-    }catch(err){
-        console.log(err);
-        return res.status(500).json({"Error":"Internal Server Error"});
-    }
-}
+      return res
+        .status(200)
+        .json({ Message: "SignIn Successfully", user: user, token: token });
+    } else return res.status(401).json({ Error: "Invalid User or Password" });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ Error: "Internal Server Error" });
+  }
+};

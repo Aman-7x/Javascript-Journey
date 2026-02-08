@@ -3,20 +3,19 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-export const auth = async(req,res,next)=>{
-    const header = req.headers.authorization || req.headers.Authorization;
-    
-    if(!header)
-    return res.status(401).json({"Error":"Authentication token missing"});
+//auth middleware to check token
+export const auth = async (req, res, next) => {
+  const header = req.headers.authorization || req.headers.Authorization;
 
-    const token = header.split(" ")[1];
+  if (!header)
+    return res.status(401).json({ Error: "Authentication token missing" });
 
-    jwt.verify(token,process.env.SECRET_KEY,(err,decoded)=>{
-        if(err)
-        return res.status(401).json({"Error":"Session Expired!"});
+  const token = header.split(" ")[1];
 
-         req.user = decoded.user;
-         next();
-    });
-    
-}
+  jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
+    if (err) return res.status(401).json({ Error: "Session Expired!" });
+
+    req.user = decoded.user;
+    next();
+  });
+};

@@ -9,13 +9,10 @@ dbConnect();
 const app = express();
 const port = process.env.PORT;
 
- 
 app.use(express.json());
-app.use("/user",userRoute);
-app.use("/contact",contactRoute);
-    
+app.use("/user", userRoute);
+app.use("/contact", contactRoute);
 
-app.listen(port,()=>{
-    console.log(`Server is running Port : ${port}`);
-}) 
-
+app.listen(port, () => {
+  console.log(`Server is running Port : ${port}`);
+});
