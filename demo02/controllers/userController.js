@@ -74,6 +74,8 @@ export const signIn = async (req, res) => {
   }
 };
 
+
+//Upload Profile Pic using Disk Storage
 export const profilePic = async (req, res) => {
   try {
     const user = await User.findOne({ _id: req.user._id });

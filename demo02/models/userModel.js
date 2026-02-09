@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { profile } from "node:console";
+
 
 const userSchema = new mongoose.Schema(
   {
@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema(
     },
     profilePic: {
       imageName: String,
-      address: String,
+      address: String
     },
   },
   {
