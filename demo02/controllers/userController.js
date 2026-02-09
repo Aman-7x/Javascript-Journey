@@ -8,7 +8,7 @@ dotenv.config();
 //SignUp route
 export const signUp = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, profilePic } = req.body;
 
     if (!name || !email || !password)
       return res.status(400).json({ Error: "Invalid Input" });
@@ -24,6 +24,7 @@ export const signUp = async (req, res) => {
       name,
       email,
       password: hashedPassword,
+      profilePic: profilePic ?? null,
     });
 
     if (user)
@@ -67,6 +68,36 @@ export const signIn = async (req, res) => {
         .status(200)
         .json({ Message: "SignIn Successfully", user: user, token: token });
     } else return res.status(401).json({ Error: "Invalid User or Password" });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ Error: "Internal Server Error" });
+  }
+};
+
+export const profilePic = async (req, res) => {
+  try {
+    const user = await User.findOne({ _id: req.user._id });
+
+    if (!user) return res.status(404).json({ Error: "User Not Found" });
+
+    user.profilePic = {
+      imageName: req.file.filename,
+      address: req.file.path,
+    };
+
+    await user.save();
+    return res
+      .status(200)
+      .json({ Message: "File Uploaded", userProfile: user.profilePic });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const fetchUser = async (req, res) => {
+  try {
+    const users = await User.find();
+    return res.status(200).json({ Users: users });
   } catch (err) {
     console.log(err);
     return res.status(500).json({ Error: "Internal Server Error" });
