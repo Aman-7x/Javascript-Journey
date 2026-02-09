@@ -2,6 +2,7 @@ import { User } from "../models/userModel.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import cloudinary from "../configs/cloudConnect.js";
 
 dotenv.config();
 
@@ -74,23 +75,60 @@ export const signIn = async (req, res) => {
   }
 };
 
-
 //Upload Profile Pic using Disk Storage
+// export const profilePic = async (req, res) => {
+//   try {
+//     const user = await User.findOne({ _id: req.user._id });
+
+//     if (!user) return res.status(404).json({ Error: "User Not Found" });
+
+//     user.profilePic = {
+//       imageName: req.file.filename,
+//       address: req.file.path,
+//     };
+
+//     await user.save();
+//     return res
+//       .status(200)
+//       .json({ Message: "File Uploaded", userProfile: user.profilePic });
+//   } catch (err) {
+//     console.log(err);
+//   }
+// };
+
+//Upload profile pic using memoryStorage ( cloudinary)
 export const profilePic = async (req, res) => {
   try {
     const user = await User.findOne({ _id: req.user._id });
 
     if (!user) return res.status(404).json({ Error: "User Not Found" });
 
-    user.profilePic = {
-      imageName: req.file.filename,
-      address: req.file.path,
-    };
+    //wrap it into promise to make code async
+    const result = await new Promise((resolve, reject) => {
+      //upload_stream() return writable Stream
+      const stream = cloudinary.uploader.upload_stream(
+        {
+          //optional
+          folder: "Profile-Pictures",
+        },
+        (err, result) => {
+          if (err) reject(err);
+          else resolve(result);
+        }
+      );
+      stream.end(req.file.buffer); //sending buffer data into writeable stream
+    });
 
+    user.profilePic = {
+      public_id: result.public_id,
+      url: result.url,
+    };
     await user.save();
-    return res
-      .status(200)
-      .json({ Message: "File Uploaded", userProfile: user.profilePic });
+     
+    return res.status(201).json({
+      Message: "Profile Picture Uploaded Successfully",
+      Profile: user.profilePic,
+    });
   } catch (err) {
     console.log(err);
   }
