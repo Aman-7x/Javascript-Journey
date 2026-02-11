@@ -3,6 +3,7 @@ import { User } from "../models/userModels.js";
 
 export const fetechProfile = async (req, res) => {
   try {
+     
     const user = await User.findOne({ _id: req.user._id }).populate("profile");
 
     if (!user) return res.status(404).json({ Error: "User Not Found" });
@@ -18,12 +19,10 @@ export const fetechProfile = async (req, res) => {
 
 export const createProfile = async (req, res) => {
   try {
-    const user = await User.findOne({ _id: req.user._id })
+    const user = await User.findOne({ _id: req.user._id });
 
     if (!user) return res.status(404).json({ Error: "User Not Found" });
-
-     
-
+ 
     if (user.profile) return res.status(400).json({ Error: "Profile Already Exist!" });
 
     const { bio, age } = req.body;
@@ -35,7 +34,7 @@ export const createProfile = async (req, res) => {
         age
     });
 
-    if (!profile) return res.status(500).json({ Error: "Somethinf went wrong, Try again later!" });
+    if (!profile) return res.status(500).json({ Error: "Something went wrong, Try again later!" });
 
     user.profile = profile._id;
     await user.save();

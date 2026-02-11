@@ -22,12 +22,21 @@ const userSchema = new mongoose.Schema({
         ref:"Profile",
         unique:true
     },
-    post:[{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:"Post"
-    }]
+    likedPosts: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Post"
+    }
+  ]
+    // ,
+    // post:[{
+    //     type:mongoose.Schema.Types.ObjectId,
+    //     ref:"Post"
+    // }]
 },{
     timestamps:true
 });
 
 export const User = mongoose.model("User",userSchema); 
+
+

@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const profileSchema = new mongoose.Schema({
-    bio:{
+       bio:{
         type:String,
         trim:true
     },
