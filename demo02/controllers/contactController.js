@@ -55,7 +55,7 @@ export const updateContact = async (req, res) => {
     const { name, age, email, contactNo } = req.body;
     const { id } = req.params;
 
-    const isExist = await Contacts.find({ _id: id });
+      const isExist = await Contacts.find({ _id: id });
 
     if (!isExist) return res.status(404).json({ Error: "Invalid Contact" });
 
