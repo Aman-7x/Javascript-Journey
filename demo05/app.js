@@ -5,16 +5,16 @@ import userRoute from "./routes/userRoute.js";
 import taskRoute from "./routes/taskRoute.js";
 
 const app = express();
-dotenv.config()
+dotenv.config();
 dbConnect();
 
 const port = process.env.PORT;
 
 app.use(express.json());
 
-app.use("/user",userRoute);
-app.use("/task",taskRoute);
+app.use("/user", userRoute);
+app.use("/task", taskRoute);
 
-app.listen(port,()=>{
-    console.log(`Server is running at Port ${port}`);
-})
+app.listen(port, () => {
+  console.log(`Server is running at Port ${port}`);
+});

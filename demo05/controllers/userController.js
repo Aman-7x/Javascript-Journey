@@ -62,18 +62,14 @@ export const signIn = async (req, res) => {
         }
       );
 
-      res
-        .status(200)
-        .json({
-          Message: "User SignIn Successfully",
-          user: isExist,
-          token: token,
-        });
+      res.status(200).json({
+        Message: "User SignIn Successfully",
+        user: isExist,
+        token: token,
+      });
     } else {
       return res.status(401).json({ Error: "Invalid User Id or Password!" });
     }
-
-     
   } catch (err) {
     console.log(err);
     return res.status(501).json({ Error: "Internal Server Error" });

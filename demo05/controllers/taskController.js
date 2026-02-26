@@ -74,6 +74,13 @@ export const updateTask = async (req, res) => {
 
     const id = req.params.id;
 
+    const isExist = await Tasks.findOne({ _id: id });
+    if (!isExist) return res.status(404).json({ Error: "Task Not Found" });
+
+    if (!(req.user._id.toString() === isExist.user.toString())) {
+      return res.status(400).json({ Error: "Bad Request!!" });
+    }
+
     const task = await Tasks.findByIdAndUpdate(
       {
         _id: id,
@@ -83,8 +90,9 @@ export const updateTask = async (req, res) => {
         description,
         status,
         dueDate,
-      },{
-        new:true
+      },
+      {
+        new: true,
       }
     );
 
@@ -92,30 +100,36 @@ export const updateTask = async (req, res) => {
       return res
         .status(201)
         .json({ Message: "Task Updated Successfully", task: task });
-    else return res.status(404).json({ Error: "Task Not Found" });
+    else return res.status(500).json({ Error: "Something went Wrong" });
   } catch (err) {
     console.log(err);
-    return res.status(501).json({ Error: "Internal Server Error" });
+    return res.status(500).json({ Error: "Internal Server Error" });
   }
 };
 
 export const deleteTask = async (req, res) => {
   try {
-   
     if (!req.user)
       return res.status(404).json({ Error: "User Not Found, SignIn again!!" });
 
     const id = req.params.id;
 
-    const task = await Tasks.findByIdAndDelete({_id: id});
+    const isExist = await Tasks.findOne({ _id: id });
+    if (!isExist) return res.status(404).json({ Error: "Task Not Found" });
+
+    if (!(req.user._id.toString() === isExist.user.toString())) {
+      return res.status(400).json({ Error: "Bad Request!!" });
+    }
+
+    const task = await Tasks.findByIdAndDelete({ _id: id });
 
     if (task)
       return res
         .status(201)
         .json({ Message: "Task Deleted Successfully", task: task });
-    else return res.status(404).json({ Error: "Task Not Found" });
+    else return res.status(500).json({ Error: "Something Went Wrong" });
   } catch (err) {
     console.log(err);
-    return res.status(501).json({ Error: "Internal Server Error" });
+    return res.status(500).json({ Error: "Internal Server Error" });
   }
 };
